@@ -7,3 +7,5 @@ and SEE a map of the results
 As a HUNGRY person
 I WOULD LIKE to explore cuisine types
 by SEEING trivia about that food
+
+# Story 3
