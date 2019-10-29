@@ -4,11 +4,27 @@
 
 var map;
 
-var berlin = { lat: 52.52, lng: 13.405 };
+const BERLIN_COORD = { lat: 52.52, lng: 13.405 };
 
+// this function returns the longitude and latitude of the user's location
+// we should consider triggering this only when the user clicks on the 'search'
+// button
+function getUserLocation() {
+  if ("geolocation" in navigator) {
+    /* geolocation is available */
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log(position.coords.latitude, position.coords.longitude);
+    });
+  } else {
+    /* geolocation IS NOT available */
+    console.log("Geolocation API not available in your browser, sorry!");
+  }
+}
+
+// this function paints a google map on the page, with a labeled marker
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
-    center: berlin,
+    center: BERLIN_COORD,
     zoom: 13
   });
   var marker = new google.maps.Marker({
