@@ -1,1 +1,5 @@
-console.log("hello")
+console.log("test conflict")
+for (let index = 0; index < array.length; index++) {
+    const element = array[index];
+    
+}
