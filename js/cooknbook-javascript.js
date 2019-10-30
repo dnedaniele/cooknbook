@@ -54,6 +54,13 @@ function renderMapLeaflet() {
         "pk.eyJ1IjoicGZkem0iLCJhIjoiY2syZDZyaXZ6MHQxbjNqcDR4Nm5jMDlkaiJ9.NfZcJYx2UKi8cUdQalfkyg"
     }
   ).addTo(mymap);
+
+  // Add a marker at ESMT Berlin's location to test functionality
+
+  L.marker([52.51587, 13.401432])
+    .addTo(mymap)
+    .bindPopup("<span class='font-weight-bold'>ESMT Berlin</span><br> The business school founded by business.")
+    .openPopup();
 }
 
 // Also trying Mapbox GL JS
