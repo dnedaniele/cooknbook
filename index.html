@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="css/style.css" />
     <title>Book&Cook</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <h1>
-            CooknBook
-        </h1>
-        <p>Hungry and thirsty but dont know where to go to eat? No matter what kind of place you are searching for
-            (business lunch, cozy family dinner, fancy date nigth out or a Café) and what kind of cuisine you
-            prefer, click on of the buttons below and we will show you places near you to meet your needs.</p>
-        <p>If the results dont meet your taste or are not in your budget plan, we are gonna show you alternative recipe
-            ideas.</p>
+      <h1>
+        CooknBook
+      </h1>
+      <p>
+        Hungry and thirsty but dont know where to go to eat? No matter what kind
+        of place you are searching for (business lunch, cozy family dinner,
+        fancy date nigth out or a Café) and what kind of cuisine you prefer,
+        click on of the buttons below and we will show you places near you to
+        meet your needs.
+      </p>
+      <p>
+        If the results dont meet your taste or are not in your budget plan, we
+        are gonna show you alternative recipe ideas.
+      </p>
     </header>
     <div id="userInput">
 
@@ -94,12 +103,16 @@
         </div>
 
     </div>
-    <div id="map">MAP</div>
+    <div id="map"></div>
     <div id="recipe">RECIPE</div>
     <div id="giphy">GIPHY</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     </script>
-
+<script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNkDcVt_FLVyQCfckYAKP2YaGrkaFdmKc&callback=initMap"
+      async
+      defer
+    ></script>
     <script type="text/javascript" src="./js/cooknbook-javascript.js"></script>
 </body>
 
