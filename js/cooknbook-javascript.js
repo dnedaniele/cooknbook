@@ -6,7 +6,7 @@ var queryURL =
 $.ajax({
   url: queryURL,
   method: "GET"
-}).then(function(response) {
+}).then(function (response) {
   $("#recipe-view").text(JSON.stringify(response));
   console.log(response);
 });
@@ -24,7 +24,7 @@ var user = {};
 function getUserLocation() {
   if ("geolocation" in navigator) {
     /* geolocation is available */
-    navigator.geolocation.getCurrentPosition(function(position) {
+    navigator.geolocation.getCurrentPosition(function (position) {
       user.lat = position.coords.latitude;
       user.lng = position.coords.longitude;
       renderMapbox();
@@ -75,3 +75,18 @@ function renderMapbox() {
     zoom: 12
   });
 }
+
+// list of restaurants
+
+var restaurantName = 'chinese'
+var userLocation = "52.520008, 13.404954"
+
+
+var queryURL = "https://api.foursquare.com/v2/venues/explore?client_id=IFQ0EC04QC55WLPD00E5XPI1MP03Z4UMQEHMQR34VSUQZS2C&client_secret=LNJVMGQ0EO2J20AYFNOZE2ROEIDJM4LPS1Y5ZMU244MXLNRZ&v=20180323&limit=5&ll=" + userLocation + "&query=" + restaurantName;
+
+$.ajax({
+  url: queryURL,
+  method: "GET"
+}).then(function (restList) {
+  console.log(restList);
+});
