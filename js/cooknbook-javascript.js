@@ -70,7 +70,7 @@ function renderMap(arr) {
 
 function getPlaces() {
   var restaurantName = "chinese";
-  var userLocation = "52.520008, 13.404954";
+  var userLocation = `${user.lat},${user.lng}`;
   var places = [];
 
   var queryURL =
