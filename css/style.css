@@ -6,12 +6,9 @@ body {
   padding: 0;
 }
 
-#mapid, #map {
+#mapid,
+#map {
   height: 400px;
   max-width: 600px;
   margin: 2rem auto;
 }
-
-/* .dan-graphic {
-
-} */

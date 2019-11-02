@@ -1,16 +1,53 @@
-var cusineType = $("#cusine-input").val() || "asian";
-var queryURL =
-  "https://api.edamam.com/search?q=" +
-  cusineType +
-  "&app_id=$ae6bf7b0&app_key=$f2c047350509b09ed7dc98cd15dd86d1—";
-$.ajax({
-  url: queryURL,
-  method: "GET"
-}).then(function(response) {
-  $("#recipe-view").text(JSON.stringify(response));
-  console.log({ recipe: response });
-});
+var cusineType = $("#cusine-input").val() || "european";
+// Initial array of cusine types
+var cusineTypes = [
+  "asian cusine",
+  "european cusine",
+  "middle eastern cusine",
+  "mediterreanean cusine",
+  "north american cusine",
+  "south american cusine"
+];
 
+// Adding a click event listener to all elements with a class of "searchBtn"
+$(document).on("click", ".searchBtn", function(event) {
+  event.preventDefault();
+
+  var queryURL =
+    "https://api.edamam.com/search?q=" +
+    event.target.id +
+    "&app_id=$ae6bf7b0&app_key=$f2c047350509b09ed7dc98cd15dd86d1—";
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(response) {
+    console.log(response);
+
+    var recipeDiv = $("<div class='recipe'>");
+
+    // Storing the recipe data
+    var recipe = response.hits[0].recipe;
+
+    // Creating an element to have the recipe displayed
+    var re = $("<h3>").text("Recipe: " + recipe.label);
+
+    // Displaying the rating
+
+    // Retrieving the URL for the image
+    var imgURL = recipe.image;
+
+    // Creating an element to hold the image
+    var image = $("<img>").attr("src", imgURL);
+
+    // Appending the image
+    recipeDiv.append(image);
+    recipeDiv.append(re);
+
+    $("#recipe").html(recipeDiv);
+  });
+
+  console.log(event.target.id);
+});
 // create a Google Map on the page and display markers on it
 // const GOOGLE_MAPS_JS_API = "AIzaSyDNkDcVt_FLVyQCfckYAKP2YaGrkaFdmKc";
 
@@ -89,7 +126,3 @@ function getPlaces() {
     renderMap(places);
   });
 }
-
-
-
-
