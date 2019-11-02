@@ -89,3 +89,7 @@ function getPlaces() {
     renderMap(places);
   });
 }
+
+
+
+
