@@ -24,10 +24,13 @@ $(document).on("click", ".searchBtn", function (event) {
         var recipe = response.hits[0].recipe;
 
         // Creating an element to have the recipe displayed
-        var re = $("<h3>").text("Recipe: " + recipe.label);
+        var re = $("<h3>").text("" + recipe.label);
 
-        // Displaying the rating
+        // Retriving the URL for the recipe
+        var recURL = recipe.url;
 
+        // Creating an element to hold the recipe link 
+        var link = $("<a>").attr("href", recURL);
 
         // Retrieving the URL for the image
         var imgURL = recipe.image;
@@ -35,9 +38,10 @@ $(document).on("click", ".searchBtn", function (event) {
         // Creating an element to hold the image
         var image = $("<img>").attr("src", imgURL);
 
-        // Appending the image
+        // Appending the image and the recipe label and recipe link 
         recipeDiv.append(image);
         recipeDiv.append(re);
+        recipeDiv.append(link);
 
 
 
