@@ -24,3 +24,12 @@ body {
     -webkit-transform: unset;
   }
 }
+/* nice display font for the logo */
+.brand-logo {
+  font-family: "Bangers", cursive;
+}
+
+/* Stop underline appearing when hovering over logo/title */
+.brand-logo:hover {
+  text-decoration: none;
+}

@@ -29,6 +29,15 @@ $(document).on("click", ".searchBtn", function(event) {
     var recipe = response.hits[0].recipe;
 
     // Creating an element to have the recipe displayed
+    var re = $("<h3>").text("" + recipe.label);
+
+    // Retriving the URL for the recipe
+    var recURL = recipe.url;
+
+    // Creating an element to hold the recipe link
+    var link = $("<a>").attr("href", recURL);
+
+    // Creating an element to have the recipe displayed
     var re = $("<h3>").text("Recipe: " + recipe.label);
 
     // Displaying the rating
@@ -39,9 +48,10 @@ $(document).on("click", ".searchBtn", function(event) {
     // Creating an element to hold the image
     var image = $("<img>").attr("src", imgURL);
 
-    // Appending the image
+    // Appending the image and the recipe label and recipe link
     recipeDiv.append(image);
     recipeDiv.append(re);
+    recipeDiv.append(link);
 
     $("#recipe").html(recipeDiv);
   });
@@ -75,7 +85,6 @@ function getUserLocation() {
 getUserLocation();
 
 // this function paints a google map on the page, with a labeled marker
-// trying Leaflet JS for maps
 
 function renderMap(arr) {
   var mymap = L.map("mapid").setView([user.lat, user.lng], 13);
@@ -91,7 +100,7 @@ function renderMap(arr) {
     }
   ).addTo(mymap);
 
-  // Add a marker at ESMT Berlin's location to test functionality
+  // Add markers from array passed as argument
 
   arr.forEach(element => {
     L.marker([element.location.lat, element.location.lng])
