@@ -29,6 +29,8 @@ function getRecipes(query) {
     // Storing the recipe data
     var recipe = response.hits[0].recipe;
 
+    
+
     // Creating an element to have the recipe displayed
     var re = $("<h3>").text("" + recipe.label);
 
@@ -52,11 +54,25 @@ function getRecipes(query) {
     var image = $("<img>").attr("src", imgURL);
 
     // Appending the image and the recipe label and recipe link
-    recipeDiv.append(image);
-    recipeDiv.append(re);
-    recipeDiv.append(link);
+    // recipeDiv.append(image);
+    // recipeDiv.append(re);
+    // recipeDiv.append(link);
 
-    $("#recipe").html(recipeDiv);
+    $("#recipe").html(`
+    <div class="card">
+    
+    <img
+      src="${imgURL}"
+      class="card-img-top"
+    />
+    <div class="card-body">
+      <h5 class="card-title">${recipe.label}</h5>
+
+      <p class="card-body"><a href="${recURL}">Try it out!</a></p>
+    </div>
+    </div>
+    
+    `);
   });
 
   console.log(event.target.id);
