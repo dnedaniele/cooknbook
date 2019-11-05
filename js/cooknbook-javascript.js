@@ -1,21 +1,17 @@
-var cusineType = $("#cusine-input").val() || "european";
-// Initial array of cusine types
-var cusineTypes = [
-  "asian cusine",
-  "european cusine",
-  "middle eastern cusine",
-  "mediterreanean cusine",
-  "north american cusine",
-  "south american cusine"
-];
-
 // Adding a click event listener to all elements with a class of "searchBtn"
 $(document).on("click", ".searchBtn", function(event) {
   event.preventDefault();
 
+  let query = $(event.target).attr("data-cuisine");
+
+  getRecipes(query);
+  getUserLocation(query);
+});
+
+function getRecipes(query) {
   var queryURL =
     "https://api.edamam.com/search?q=" +
-    event.target.id +
+    query +
     "&app_id=$ae6bf7b0&app_key=$f2c047350509b09ed7dc98cd15dd86d1—";
   $.ajax({
     url: queryURL,
@@ -57,7 +53,8 @@ $(document).on("click", ".searchBtn", function(event) {
   });
 
   console.log(event.target.id);
-});
+}
+
 // create a Google Map on the page and display markers on it
 // const GOOGLE_MAPS_JS_API = "AIzaSyDNkDcVt_FLVyQCfckYAKP2YaGrkaFdmKc";
 
@@ -74,15 +71,13 @@ function getUserLocation() {
     navigator.geolocation.getCurrentPosition(function(position) {
       user.lat = position.coords.latitude;
       user.lng = position.coords.longitude;
-      getPlaces();
+      getPlaces(pablo);
     });
   } else {
     /* geolocation IS NOT available */
     console.log("Geolocation API not available in your browser, sorry!");
   }
 }
-
-getUserLocation();
 
 // this function paints a google map on the page, with a labeled marker
 
@@ -114,8 +109,8 @@ function renderMap(arr) {
 
 // list of restaurants FourSquare
 
-function getPlaces() {
-  var restaurantName = "chinese";
+function getPlaces(query) {
+  var restaurantName = query;
   var userLocation = `${user.lat},${user.lng}`;
   var places = [];
 
