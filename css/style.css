@@ -1,21 +1,51 @@
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
-  height: 100%;
   margin: 0;
   padding: 0;
 }
 
 #mapid {
-  height: 400px;
-  max-width: 600px;
-  margin: 2rem auto;
+  height: 500px;
+  width: 100%;
 }
 
-#logo {
-  float: left;
+/* nice display font for the logo and headings */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.brand-logo {
+  font-family: "Bangers", cursive;
 }
 
+a {
+  color: #e57373;
+}
+
+a:hover {
+  color: #d32f2f;
+}
+
+#recipe {
+  max-width: 34rem;
+}
+
+/* make map markers red */
+.leaflet-marker-icon {
+  filter: hue-rotate(145deg);
+}
+
+/* let the buttons breathe */
+#userInput {
+  justify-content: space-evenly;
+}
+
+#userInput button {
+  margin-bottom: 5px;
+}
 /* this rule overrides some Materialize CSS that breaks with our logo img */
 @media only screen and (max-width: 992px) {
   nav .brand-logo {
@@ -23,10 +53,6 @@ body {
     left: unset;
     -webkit-transform: unset;
   }
-}
-/* nice display font for the logo */
-.brand-logo {
-  font-family: "Bangers", cursive;
 }
 
 /* Stop underline appearing when hovering over logo/title */
