@@ -6,9 +6,31 @@ body {
   padding: 0;
 }
 
-#mapid,
-#map {
+#mapid {
   height: 400px;
   max-width: 600px;
   margin: 2rem auto;
+}
+
+#logo {
+  float: left;
+}
+
+/* this rule overrides some Materialize CSS that breaks with our logo img */
+@media only screen and (max-width: 992px) {
+  nav .brand-logo {
+    transform: unset;
+    left: unset;
+    -webkit-transform: unset;
+  }
+}
+
+/* nice display font for the logo */
+.brand-logo {
+  font-family: "Bangers", cursive;
+}
+
+/* Stop underline appearing when hovering over logo/title */
+.brand-logo:hover {
+  text-decoration: none;
 }
