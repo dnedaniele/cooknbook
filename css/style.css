@@ -21,6 +21,14 @@ h5,
   font-family: "Bangers", cursive;
 }
 
+a {
+  color: #e57373;
+}
+
+a:hover {
+  color: #d32f2f;
+}
+
 #recipe {
   max-width: 34rem;
 }
