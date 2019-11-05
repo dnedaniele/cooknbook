@@ -8,6 +8,8 @@ $(document).on("click", ".searchBtn", function(event) {
   getUserLocation(query);
 });
 
+// get recipes from Edamam API
+
 function getRecipes(query) {
   var queryURL =
     "https://api.edamam.com/search?q=" +
@@ -65,13 +67,13 @@ var user = {};
 // this function returns the longitude and latitude of the user's location
 // we should consider triggering this only when the user clicks on the 'search'
 // button
-function getUserLocation() {
+function getUserLocation(query) {
   if ("geolocation" in navigator) {
     /* geolocation is available */
     navigator.geolocation.getCurrentPosition(function(position) {
       user.lat = position.coords.latitude;
       user.lng = position.coords.longitude;
-      getPlaces(pablo);
+      getPlaces(query);
     });
   } else {
     /* geolocation IS NOT available */
