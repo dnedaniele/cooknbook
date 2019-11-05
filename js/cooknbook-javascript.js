@@ -1,3 +1,6 @@
+var mymap;
+
+let markerLayer;
 // Adding a click event listener to all elements with a class of "searchBtn"
 $(document).on("click", ".searchBtn", function(event) {
   event.preventDefault();
@@ -34,6 +37,8 @@ function getRecipes(query) {
 
     // Creating an element to hold the recipe link
     var link = $("<a>").attr("href", recURL);
+
+    link.text("try this recipe");
 
     // Creating an element to have the recipe displayed
     var re = $("<h3>").text("Recipe: " + recipe.label);
@@ -84,29 +89,39 @@ function getUserLocation(query) {
 // this function paints a google map on the page, with a labeled marker
 
 function renderMap(arr) {
-  var mymap = L.map("mapid").setView([user.lat, user.lng], 13);
+  console.log(arr);
+  if (!document.querySelector("#mapid").innerHTML) {
+    mymap = L.map("mapid").setView([user.lat, user.lng], 13);
 
-  L.tileLayer(
-    `https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}`,
-    {
-      attribution:
-        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      id: "mapbox.streets",
-      accessToken:
-        "pk.eyJ1IjoicGZkem0iLCJhIjoiY2syZDZyaXZ6MHQxbjNqcDR4Nm5jMDlkaiJ9.NfZcJYx2UKi8cUdQalfkyg"
-    }
-  ).addTo(mymap);
+    L.tileLayer(
+      `https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}`,
+      {
+        attribution:
+          'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        id: "mapbox.streets",
+        accessToken:
+          "pk.eyJ1IjoicGZkem0iLCJhIjoiY2syZDZyaXZ6MHQxbjNqcDR4Nm5jMDlkaiJ9.NfZcJYx2UKi8cUdQalfkyg"
+      }
+    ).addTo(mymap);
+  } else {
+    mymap.removeLayer(markerLayer);
+  }
 
   // Add markers from array passed as argument
 
+  let markers = [];
+
   arr.forEach(element => {
-    L.marker([element.location.lat, element.location.lng])
-      .addTo(mymap)
-      .bindPopup(
+    markers.push(
+      L.marker([element.location.lat, element.location.lng]).bindPopup(
         `<div class="font-weight-bold">${element.name}</div>
-        <div class="font-italic">${element.location.formattedAddress}</div>`
-      );
+          <div class="font-italic">${element.location.formattedAddress}</div>`
+      )
+    );
   });
+
+  markerLayer = L.layerGroup(markers);
+  markerLayer.addTo(mymap);
 }
 
 // list of restaurants FourSquare
