@@ -1,7 +1,6 @@
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
-  height: 100%;
   margin: 0;
   padding: 0;
 }
@@ -15,18 +14,14 @@ body {
   float: left;
 }
 
-/* nice display font for the logo */
-.brand-logo {
-  font-family: "Bangers", cursive;
-}
-
-/* same font for headings */
+/* nice display font for the logo and headings */
 
 h1,
 h2,
 h3,
 h4,
-h5 {
+h5,
+.brand-logo {
   font-family: "Bangers", cursive;
 }
 
@@ -34,10 +29,12 @@ h5 {
   max-width: 34rem;
 }
 
+/* make map markers red */
 .leaflet-marker-icon {
   filter: hue-rotate(145deg);
 }
 
+/* let the buttons breathe */
 #userInput {
   justify-content: space-evenly;
 }
@@ -52,14 +49,6 @@ h5 {
     left: unset;
     -webkit-transform: unset;
   }
-}
-
-/* another Materialize override that breaks Bootstrap's flexbox */
-
-.row::after {
-  content: unset;
-  display: unset;
-  clear: unset;
 }
 
 /* Stop underline appearing when hovering over logo/title */
