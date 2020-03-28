@@ -8,4 +8,10 @@ The user then can choose a restaurant and gets random/ general info on the food
 
 As an alternative the user will be shown a recipe if the user does not want to to restaurant, or if places is closed etc.
 
+Used technology: JavaScript, CSS, 
+
+used APIs:  https://developers-dot-devsite-v2-prod.appspot.com/places/web-service/intro https://developer.foursquare.com/docs/api/venues/search
+
+Recipe API https://developer.edamam.com/edamam-docs-recipe-api
+
 Find the deployed website here: https://dnedaniele.github.io/cooknbook/
