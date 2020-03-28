@@ -1,6 +1,6 @@
 # CookNBook 
 
-
+![image](https://user-images.githubusercontent.com/55050594/77821630-082d4a00-70ec-11ea-8a13-48e4d499eae1.png)
 
 A website where the User can choose between cusine types (e.g: asian, mexican etc) and depending on the bottom the user clicks the user will be shown restaurante/bars/ places around him on google maps
 
