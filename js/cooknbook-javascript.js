@@ -1,81 +1,46 @@
 var mymap;
+//IT's always returning 401 unauthorized ?:?
+const EDMAM_ENDPOINT = `https://api.edamam.com/search?app_id=ae6bf7b0&app_key=f2c047350509b09ed7dc98cd15dd86d1—`;
+const FOURSQUARE_ENDPOINT = `https://api.foursquare.com/v2/venues/explore?client_id=IFQ0EC04QC55WLPD00E5XPI1MP03Z4UMQEHMQR34VSUQZS2C&client_secret=LNJVMGQ0EO2J20AYFNOZE2ROEIDJM4LPS1Y5ZMU244MXLNRZ&v=20180323&limit=5`
 
 let markerLayer;
 // Adding a click event listener to all elements with a class of "searchBtn"
-$(document).on("click", ".searchBtn", function(event) {
+$(document).on("click", ".searchBtn", async function (event) {
   event.preventDefault();
-
-  let query = $(event.target).attr("data-cuisine");
-
-  getRecipes(query);
-  getUserLocation(query);
+  try {
+    let query = $(event.target).attr("data-cuisine");
+    let userLocation = await getLocation();
+    var restaurants = await getRestaurants(query, userLocation);
+    renderMap(restaurants, userLocation);
+    const recipe = await getSingleRecipe(query);
+    renderRecipe(recipe)
+  } catch(err) {
+    console.log(err);
+  }
 });
 
 // get recipes from Edamam API
 
-function getRecipes(query) {
-  var queryURL =
-    "https://api.edamam.com/search?q=" +
-    query +
-    "&app_id=$ae6bf7b0&app_key=$f2c047350509b09ed7dc98cd15dd86d1—";
-  $.ajax({
-    url: queryURL,
+async function getSingleRecipe(query) {
+  return $.ajax({
+    url: `${EDMAM_ENDPOINT}&q=${query}`,
     method: "GET"
-  }).then(function(response) {
-    console.log(response);
+  }).then(response => response.hits[0].recipe).catch(err => console.error(err));
+}
 
-    var recipeDiv = $("<div class='recipe'>");
-
-    // Storing the recipe data
-    var recipe = response.hits[0].recipe;
-
-    
-
-    // Creating an element to have the recipe displayed
-    var re = $("<h3>").text("" + recipe.label);
-
-    // Retriving the URL for the recipe
-    var recURL = recipe.url;
-
-    // Creating an element to hold the recipe link
-    var link = $("<a>").attr("href", recURL);
-
-    link.text("try this recipe");
-
-    // Creating an element to have the recipe displayed
-    var re = $("<h3>").text("Recipe: " + recipe.label);
-
-    // Displaying the rating
-
-    // Retrieving the URL for the image
-    var imgURL = recipe.image;
-
-    // Creating an element to hold the image
-    var image = $("<img>").attr("src", imgURL);
-
-    // Appending the image and the recipe label and recipe link
-    // recipeDiv.append(image);
-    // recipeDiv.append(re);
-    // recipeDiv.append(link);
-
-    $("#recipe").html(`
+function renderRecipe(recipe) {
+  $("#recipe").html(`
     <div class="card">
-    
-    <img
-      src="${imgURL}"
-      class="card-img-top"
-    />
-    <div class="card-body">
-      <h5 class="card-title">${recipe.label}</h5>
-
-      <p class="card-body"><a href="${recURL}">Try it out!</a></p>
-    </div>
-    </div>
-    
-    `);
-  });
-
-  console.log(event.target.id);
+      <img
+        src="${recipe.image}"
+        class="card-img-top"
+      />
+      <div class="card-body">
+        <h5 class="card-title">${recipe.label}</h5>
+        <p class="card-body"><a href="${recipe.url}">Try it out!</a></p>
+      </div>
+      </div>
+  `);
 }
 
 // create a Google Map on the page and display markers on it
@@ -85,29 +50,26 @@ const BERLIN_COORD = { lat: 52.52, lng: 13.405 };
 
 var user = {};
 
-// this function returns the longitude and latitude of the user's location
-// we should consider triggering this only when the user clicks on the 'search'
-// button
-function getUserLocation(query) {
-  if ("geolocation" in navigator) {
-    /* geolocation is available */
-    navigator.geolocation.getCurrentPosition(function(position) {
-      user.lat = position.coords.latitude;
-      user.lng = position.coords.longitude;
-      getPlaces(query);
-    });
-  } else {
-    /* geolocation IS NOT available */
-    console.log("Geolocation API not available in your browser, sorry!");
-  }
+async function getLocation() {
+  return new Promise(function (resolve, reject) {
+    if (!navigator.geolocation) {
+      return reject('Geolocation is not supported by this browser.');
+    } else {
+      navigator.geolocation.getCurrentPosition(
+        position => resolve({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        })
+      );
+    }
+  });
 }
 
 // this function paints a google map on the page, with a labeled marker
 
-function renderMap(arr) {
-  console.log(arr);
+function renderMap(arr, userLocation) {
   if (!document.querySelector("#mapid").innerHTML) {
-    mymap = L.map("mapid").setView([user.lat, user.lng], 13);
+    mymap = L.map("mapid").setView([userLocation.lat, userLocation.lng], 13);
 
     L.tileLayer(
       `https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}`,
@@ -142,24 +104,16 @@ function renderMap(arr) {
 
 // list of restaurants FourSquare
 
-function getPlaces(query) {
-  var restaurantName = query;
-  var userLocation = `${user.lat},${user.lng}`;
-  var places = [];
+async function getRestaurants(restaurantName, userLocation) {
+  var restaurants = [];
 
-  var queryURL =
-    "https://api.foursquare.com/v2/venues/explore?client_id=IFQ0EC04QC55WLPD00E5XPI1MP03Z4UMQEHMQR34VSUQZS2C&client_secret=LNJVMGQ0EO2J20AYFNOZE2ROEIDJM4LPS1Y5ZMU244MXLNRZ&v=20180323&limit=5&ll=" +
-    userLocation +
-    "&query=" +
-    restaurantName;
-
-  $.ajax({
-    url: queryURL,
+  return $.ajax({
+    url: `${FOURSQUARE_ENDPOINT}&ll=${userLocation.lat},${userLocation.lng}&query=${restaurantName}`,
     method: "GET"
-  }).then(function(restList) {
+  }).then(restList => {
     restList.response.groups[0].items.forEach(restaurant => {
-      places.push(restaurant.venue);
+      restaurants.push(restaurant.venue);
     });
-    renderMap(places);
+    return restaurants;
   });
 }
